@@ -238,7 +238,7 @@
 <p>To double-check that the two above variables are set properly, you can run:</p>
 <pre><code class="language-bash">vault status
 </code></pre>
-<p>If a script needs more environment variables, it will tell you.</p>
+<p>If a script needs more environment variables, it should tell you.</p>
 <h2 id="in-a-vm"><a class="header" href="#in-a-vm">In a VM</a></h2>
 <p>This allows to keep the state of your vault across reboots and is very close to the <em>ephemeral vault</em> setup but skipping the need to create a USB stick. The state (<code>VAULT_WRITABLE</code> partition content) is kept in a generated raw ext4 stored in a local file named <code>orca-testing-disk.raw</code>.</p>
 <div class="mdbook-alerts mdbook-alerts-tip">
@@ -247,13 +247,6 @@
   tip
 </p>
 <p>You can loop mount this <code>.raw</code> image if you need to access or modify files.</p>
-</div>
-<div class="mdbook-alerts mdbook-alerts-note">
-<p class="mdbook-alerts-title">
-  <span class="mdbook-alerts-icon"></span>
-  note
-</p>
-<p>Most probably, you will want a <code>dev</code> environment while testing in a VM (not a <code>preprod</code> or <code>prod</code>) so you will have to make sure <code>orca.environment-target</code> is set to <code>dev</code> in <a href="../../src/default.nix">src/default.nix</a>.</p>
 </div>
 <h3 id="starting-the-iso-in-a-vm"><a class="header" href="#starting-the-iso-in-a-vm">Starting the iso in a VM</a></h3>
 <div class="mdbook-alerts mdbook-alerts-important">
@@ -265,7 +258,7 @@
 </div>
 <p>Run with:</p>
 <pre><code class="language-bash">chmod go-rwx testing/root_key
-nix run src/
+nix run .#in-vm
 </code></pre>
 <p>A virtual machine that will boot on the iso image (that was automatically mounted), and with a small disk will start.</p>
 <div class="mdbook-alerts mdbook-alerts-note">
@@ -278,14 +271,14 @@ nix run src/
 </code></pre>
 </div>
 <h3 id="simulating-a-key-with-a-readwrite-switch"><a class="header" href="#simulating-a-key-with-a-readwrite-switch">Simulating a key with a read/write switch</a></h3>
-<p>At the very beginning, in "dev" env, you have a prompt allowing you to remount the disk as read only.</p>
-<p>You can do so with :</p>
-<pre><code class="language-bash">ssh root@localhost -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=accept-new" -p 2222 -i testing/root_key mount -o remount,ro /var/lib/vault
+<p>At the very beginning, you have a prompt allowing you to switch the stick to read-write.</p>
+<p>You can do in a terminal <strong>on the host machine</strong>, at the root of O.R.CA, with:</p>
+<pre><code class="language-bash">nix develop --command switch-to-readwrite
 </code></pre>
-<p>To switch the "key" to read/write use :</p>
-<pre><code class="language-bash">ssh root@localhost -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=accept-new" -p 2222 -i testing/root_key mount -o remount /var/lib/vault
+<p>To switch the "key" to readonly use :</p>
+<pre><code class="language-bash">nix develop --command switch-to-readonly
 </code></pre>
-<h3 id="simulating-yubikeys"><a class="header" href="#simulating-yubikeys">Simulating Yubikeys</a></h3>
+<h3 id="simulating-hardware-tokens"><a class="header" href="#simulating-hardware-tokens">Simulating Hardware Tokens</a></h3>
 <div class="mdbook-alerts mdbook-alerts-warning">
 <p class="mdbook-alerts-title">
   <span class="mdbook-alerts-icon"></span>
@@ -293,13 +286,13 @@ nix run src/
 </p>
 <p>This is only available if you are using the <code>dev</code> environment-target</p>
 </div>
-<p>While a yubikey should be inserted in real life, in the VM, you can simulate.
-When asked to plug a yubikey, in a terminal <strong>on the host machine</strong>, at the root of O.R.CA, run:</p>
-<pre><code class="language-bash">ssh root@localhost -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=accept-new" -p 2222 -i testing/root_key plug-simulated-yubikey &lt;n&gt;
+<p>While a hardware token should be inserted in real life, in the VM, you can simulate.
+When asked to plug a hardware token, in a terminal <strong>on the host machine</strong>, at the root of O.R.CA, run:</p>
+<pre><code class="language-bash">nix develop --command plug-simulated-hardware-token &lt;n&gt;
 </code></pre>
-<p>where <code>&lt;n&gt;</code> is the number (1 to 4) of the yubikey you want to insert.
+<p>where <code>&lt;n&gt;</code> is the number (1 to 4) of the hardware token you want to insert.
 Then continue in the VM as in real life.
-The passphrase for the simulated yubikeys is <code>test</code></p>
+The passphrase for the simulated hardware token is <code>hwtoken</code></p>
 <h3 id="ssh-to-the-vm"><a class="header" href="#ssh-to-the-vm">SSH to the VM</a></h3>
 <div class="mdbook-alerts mdbook-alerts-warning">
 <p class="mdbook-alerts-title">
@@ -317,11 +310,11 @@ The passphrase for the simulated yubikeys is <code>test</code></p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../offline/regenerating_root_token.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../story/afterword.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../revocation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../html_gen.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -331,11 +324,11 @@ The passphrase for the simulated yubikeys is <code>test</code></p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../offline/regenerating_root_token.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../story/afterword.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../revocation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../html_gen.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
