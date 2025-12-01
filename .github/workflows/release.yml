@@ -18,6 +18,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions by eoverobot"
           git config --global user.email "<eoverobot@eove.fr>"
+          git config --global --type bool push.autoSetupRemote true
           git checkout -b ${{ github.event.inputs.version }}
 
 
