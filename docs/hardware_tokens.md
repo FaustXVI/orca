@@ -88,7 +88,7 @@ And set a new admin PIN with option 3.
 
 Generate a new Ed25519/Cv25519 keyset:
 
-Enter the "card edit" command line tool:
+Enter the "card edit" command line tool if not already in the edit card tool:
 ```bash
 gpg --card-edit
 ```
@@ -103,8 +103,6 @@ Please select what kind of key you want:
    (1) RSA
    (2) ECC
 Your selection? 2
-(2) ECC
-(1) Curve 25519
 Please select which elliptic curve you want:
    (1) Curve 25519 *default*
    (4) NIST P-384
