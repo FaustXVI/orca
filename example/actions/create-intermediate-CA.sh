@@ -3,10 +3,6 @@ if [ -z "$ENVIRONMENT_TARGET" ]; then
     echo "Expected environment variables : ENVIRONMENT_TARGET" >&2
     exit -1
 fi
-if [ -z "$AIA_FOLDER" ]; then
-    echo "Expected environment variables : AIA_FOLDER" >&2
-    exit -1
-fi
 if [ -z "$VAULT_TOKEN" ]; then
     echo "Expected environment variables : VAULT_TOKEN" >&2
     exit -1
@@ -30,12 +26,14 @@ vault secrets enable -path=$PKI_NAME pki
 vault secrets tune -max-lease-ttl=$TTL $PKI_NAME
 
 vault write $PKI_NAME/config/cluster \
-    aia_path=https://${TARGET_SUBDOMAIN}vault.eove.fr/$PKI_NAME
+    aia_path=https://${TARGET_SUBDOMAIN}aia.eove.fr/$PKI_NAME
 
 vault write $PKI_NAME/config/urls \
     issuing_certificates={{cluster_aia_path}}/issuer/{{issuer_id}}/der \
     crl_distribution_points={{cluster_aia_path}}/issuer/{{issuer_id}}/crl/der \
     enable_templating=true
+
+vault write $PKI_NAME/config/crl expiry=$(( (365 * 24) * 15 / 10 ))h # 1.5 years
 
 CSR_FILE=$(mktemp -t ${PKI_SUBDOMAIN}-offline-XXXX.csr)
 
@@ -64,13 +62,3 @@ vault write -format=json root_pki/root/sign-intermediate \
 vault write $PKI_NAME/intermediate/set-signed certificate=@${CERTIFICATE_FILE}
 ISSUER_ID=$(vault read -format=json $PKI_NAME/config/issuers | jq -r '.data.default')
 
-###################################
-# Exporting devices CA's AIA 
-###################################
-
-PKI_AIA_DIR="$AIA_FOLDER/$PKI_NAME/issuer/$ISSUER_ID"
-CRL_DIR="$PKI_AIA_DIR/crl"
-mkdir -p $PKI_AIA_DIR
-mkdir -p $CRL_DIR
-vault read -format=raw $PKI_NAME/issuer/$ISSUER_ID/der > $PKI_AIA_DIR/der
-vault read -format=raw $PKI_NAME/issuer/$ISSUER_ID/crl/der > $CRL_DIR/der

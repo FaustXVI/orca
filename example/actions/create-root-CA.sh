@@ -3,10 +3,6 @@ if [ -z "$ENVIRONMENT_TARGET" ]; then
     echo "Expected environment variables : ENVIRONMENT_TARGET" >&2
     exit -1
 fi
-if [ -z "$AIA_FOLDER" ]; then
-    echo "Expected environment variables : AIA_FOLDER" >&2
-    exit -1
-fi
 if [ -z "$VAULT_TOKEN" ]; then
     echo "Expected environment variables : VAULT_TOKEN" >&2
     exit -1
@@ -36,6 +32,8 @@ vault write $PKI_NAME/config/urls \
     crl_distribution_points={{cluster_aia_path}}/issuer/{{issuer_id}}/crl/der \
     enable_templating=true
 
+vault write $PKI_NAME/config/crl expiry=$(( (365 * 24) * 15 / 10 ))h # 1.5 years
+
 ISSUER_ID=$(vault write -format=json $PKI_NAME/root/generate/internal \
     common_name="Eove $ENVIRONMENT_TARGET Offline Root CA $(date +%F)" \
      issuer_name="eove-${ENVIRONMENT_TARGET}-offline-root-$(date +%F)" \
@@ -45,16 +43,4 @@ ISSUER_ID=$(vault write -format=json $PKI_NAME/root/generate/internal \
      exclude_cn_from_sans=true \
      alt_names="eove.fr" \
      key_type="ed25519" | jq -r '.data.issuer_id')
-
-
-###################################
-# Exporting root CA's AIA 
-###################################
-
-PKI_AIA_DIR="$AIA_FOLDER/$PKI_NAME/issuer/$ISSUER_ID"
-CRL_DIR="$PKI_AIA_DIR/crl"
-mkdir -p $PKI_AIA_DIR
-mkdir -p $CRL_DIR
-vault read -format=raw $PKI_NAME/issuer/$ISSUER_ID/der > $PKI_AIA_DIR/der
-vault read -format=raw $PKI_NAME/issuer/$ISSUER_ID/crl/der > $CRL_DIR/der
 

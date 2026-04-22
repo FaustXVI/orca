@@ -19,3 +19,10 @@ To initialize a new offline CA, we will need to include the following script fro
 
 These scripts should be customised according to your own PKI architecture. They should be included in that exact order.
 When signing a CSR, you should validate it as indicated in your `exploitation manual`.
+
+> [!Caution]
+> At the end of a ceremony, the CRLs of the CA are exported and should be made available online according to the address configured in the above scripts.
+
+> [!Caution]
+> The CRLs are valid for a given amount of time (18 month in the template). The next ceremony *must* happen before that limit in order to maintain the CRLs 
+> up-to-date.

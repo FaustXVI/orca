@@ -128,7 +128,7 @@
         assertions =
           let
             script_names = builtins.map (p: p.name) sudoer_scripts;
-            allowed_scripts = [ "backup" "count-tokens" "seal" "wipe_everything" "init-script" "rotate-shares" "unseal" "compute_c_vault" "initialize-vault" ];
+            allowed_scripts = [ "backup" "count-tokens" "seal" "wipe_everything" "init-script" "rotate-shares" "unseal" "compute_c_vault" "initialize-vault" "export_crls" ];
             unknown_scripts = pkgs.lib.lists.subtractLists allowed_scripts script_names;
           in
           [
@@ -196,7 +196,7 @@ If it should indeed be allowed to run as root, please double check them for secu
             {
               enable = true;
               extraConfig = ''
-                Defaults env_keep += "VAULT_ADDR VAULT_CACERT"
+                Defaults env_keep += "VAULT_ADDR VAULT_CACERT VAULT_TOKEN"
               '';
               extraRules = [
                 {
