@@ -13,6 +13,7 @@ in
     mv audit.log audit_$(date +%F_%T).log
   fi
 
+  echo "The recording present in the backup will stop here." >&2
   VAULT_BACKUP=/tmp/ORCA_backup.tar
   tar --numeric-owner -c -f $VAULT_BACKUP .
 

@@ -388,11 +388,11 @@ When booting *ephemeral vault*, a NixOS logo will appear with a boot menu mentio
 ```report
 The key with the vault iso image is set as read only ........ PASS [] / FAIL []
 
-While performing the USB stick content check on the operator's machine:
+While performing the USB stick content check on the observer's machine:
 the first partition is the only one marked as bootable ............... PASS [] / FAIL []
 the checksum *Ciso* is correct ....................................... PASS [] / FAIL []
 
-The operator's computer is successfully booted on the USB stick ...... PASS [] / FAIL []
+The observer's computer is successfully booted on the USB stick ...... PASS [] / FAIL []
 The USB stick stayed in read-only mode until then .................... PASS [] / FAIL []
 ```
 
@@ -480,7 +480,7 @@ The ceremony workflow execution will create a tar archive of the data in the `VA
 The value *C<sub>vault</sub>* is displayed on the *ephemeral vault*'s terminal, together with its graphical representation as a QR code. It is a checksum over the vault private data folder.\
 All 👥`team members` should keep a copy of this *C<sub>vault</sub>* value. It will be used to verify that the backup was not altered when extracted from the USB stick.
 
-To finish the ceremony, the stick must be switched to *read-only* mode and stay that way **until the end of the ceremony's workflow**.
+*When instructed to*, to finish the ceremony, the stick must be switched to *read-only* mode and stay that way **until the end of the ceremony's workflow**.
 
 The *ephemeral vault* will then switch off.
 

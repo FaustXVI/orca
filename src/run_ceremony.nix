@@ -82,6 +82,8 @@ let
           exit -1
       fi
 
+      confirm
+
         cat << EOF
 
 Here is the ceremony plan :
@@ -125,6 +127,7 @@ EOF
       echo "Creating backup :"
       ${pkgs.lib.getExe orca_protocol.backup}
 
+      echo -e '\n /!\ Do not switch the stick to read-only yet ! /!\'
       confirm
   '';
 
