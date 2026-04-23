@@ -13,6 +13,6 @@ mdbook watch --open
 ```
 
 > [!Note]  
-> The nix shell provided in the flake besides this readme automatically makes `mdbook` available to you
+> The [nix](https://nixos.org/download/#download-nix) shell provided in the flake besides this readme automatically makes `mdbook` available to you
 
 If you'd rather browse the documentation directly from the sources, your entry point will be [SUMMARY.md](./docs/SUMMARY.md)

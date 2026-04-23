@@ -25,7 +25,8 @@ in
 
         if [ "$?" -eq 0 ] 
         then
-            echo "Found a share unlocked by this hardware token" >&2
+            echo "Found a share unlocked by the hardware token of :" >&2
+            gpg-card list | grep -i "user id" | sort | uniq >&2
             echo "$SHARE"
             exit 0
         fi

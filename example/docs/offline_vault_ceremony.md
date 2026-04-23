@@ -151,7 +151,7 @@ git diff <previous ceremony trusted commit>
 > * Any change displayed by the diff should be considered legitimate to you.
 > * During this step, 👥`team members` will also review and understand all the scripts that are planned for execution during the ceremony.
 > * Scripts should never ask the offline topmost root CA to sign anything that doesn't strictly remains in the offline vault (no external CSR).
-> * If the offline CA is signing a CSR from a third party (for example online) CA, the authenticity of the CSR file should be checked. Please consult your online PKI documentation to know how to authenticate the emitter of the CSR.
+> * If the offline CA is signing a CSR from a third party (for example online) CA, the authenticity of the CSR file should be checked. Please consult the third party's documentation to know how to authenticate the emitter of the CSR.
 
 Once all 👥`team members` have validated the new ✅`trusted commit`, each of them will gather some fingerprinting data concerning the bootable media that will be used during the ceremony:
 
@@ -236,15 +236,15 @@ sudo tar --same-owner -xvf ORCA_backup.tar -C /VAULT_WRITABLE/mount/point
 2 of them will be distributed to already nominated 👥`team members` who all should also have at hand their own copy of the validated ceremony's workflow document.
 
 > [!Important]  
-> The `observer` (👀) should be **randomly** picked up. More on this below.
+> The 👀 `observer` should be **randomly** picked up. More on this below.
 
 These 3 persons should be **physically present during the whole ceremony**, and **have their hardware token with them**.
 
-1. The first role is the `operator` (💻).\
+1. The first role is the 💻`operator`.\
    This person is the one typing the commands during the verification phase and manipulates the `observer`'s computer.\
    They follow their own copy of this workflow document.
 
-2. The second role is the `reporter` (📝).\
+2. The second role is the 📝`reporter`.\
    This person has their own copy of this ceremony workflow document.\
    This person **must** be the person that created the USB stick.\
    During the whole ceremony, this person will fill in the sections framed with a <span style="border:2px dotted dodgerblue;padding-left:2px;padding-right:2px;">dotted-blue border</span>.
@@ -253,7 +253,7 @@ These 3 persons should be **physically present during the whole ceremony**, and 
 > To extract these sections from the html version of the ceremony's workflow, use the following filter:\
 >  `cat /path/to/ceremony_workflow.html | sed -e 's|<\([/]\)*code class="language-report">|\n<\1\@ORCA\@report\@>\n|g' | sed -n -e '/<\@ORCA\@report\@>/,/<\/\@ORCA\@report\@>/{s/<[/]*\@ORCA\@report\@>//;p}' | tee /tmp/blank_report.txt`
 
-3. The third role is the `observer` (👀).\
+3. The third role is the 👀`observer`.\
    This person should be [randomly](https://www.random.org/lists/) picked among all share holders except the two other 👥`team members`. The random draw will be performed by either the 💻`operator` or 📝`reporter`.\
    The 👀`observer` will lend their computer to run the *ephemeral vault*. This machine must have a Linux x86_64 OS installed.\
    They must be sitting next to the 💻`operator`. Gets the validated ceremony workflow from the 💻`operator`, and validates that the ceremony is done *exactly* as documented.\
@@ -262,8 +262,8 @@ These 3 persons should be **physically present during the whole ceremony**, and 
    * one or more USB port that fits the USB format of the hardware tokens (USB-A, USB-C etc.).
 
 > [!Warning]
-> At boot time, and if possible during the whole ceremony, the only hardware that can be used is the hardware of the `observer` (👀).\
-> This means that if a USB adaptor, a hub or a external keyboard is necessary, it **must** be hardware owned by the `observer` (👀).\
+> At boot time, and if possible during the whole ceremony, the only hardware that can be used is the hardware of the 👀`observer`.\
+> This means that if a USB adaptor, a hub or a external keyboard is necessary, it **must** be hardware owned by the 👀`observer`.\
 > If not, you may plug it only **after** the `ephemeral vault` has successfully been booted from the stick.
 
 For the rest of the procedure below, you can consider references to 👥`team members` as a synonym for the group of the 3 roles above.
@@ -342,8 +342,8 @@ Scripts that will be executed during the maintenance phase (content of `actions_
 ...............................................................................
 ...............................................................................
 
-A bootable live media has been generated for this ceremony ........... PASS [] / FAIL []
-The team member who brings the bootable media is the reporter: ....... PASS [] / FAIL []
+A bootable live media has been generated for this ceremony .. PASS [] / FAIL []
+The team member who brings the bootable media is the reporter PASS [] / FAIL []
 
 The offline CA private data has been restored from the following archive file:
 ...............................................................................
@@ -389,11 +389,11 @@ When booting *ephemeral vault*, a NixOS logo will appear with a boot menu mentio
 The key with the vault iso image is set as read only ........ PASS [] / FAIL []
 
 While performing the USB stick content check on the observer's machine:
-the first partition is the only one marked as bootable ............... PASS [] / FAIL []
-the checksum *Ciso* is correct ....................................... PASS [] / FAIL []
+the first partition is the only one marked as bootable ...... PASS [] / FAIL []
+the checksum *Ciso* is correct .............................. PASS [] / FAIL []
 
-The observer's computer is successfully booted on the USB stick ...... PASS [] / FAIL []
-The USB stick stayed in read-only mode until then .................... PASS [] / FAIL []
+The observer's computer is successfully booted on the stick . PASS [] / FAIL []
+The USB stick stayed in read-only mode the boot succeed ..... PASS [] / FAIL []
 ```
 
 </td></table>
@@ -432,7 +432,7 @@ On the *ephemeral vault*, insert each `team member`'s hardware tokens one after 
 <table width=100% style="border:2px dotted dodgerblue;"><td style="padding:0;">
 
 ```report
-The offline vault has been unsealed ........................ PASS [] / FAIL []
+The offline vault has been unsealed ......................... PASS [] / FAIL []
 ```
 
 </td></table>
@@ -444,7 +444,7 @@ Each maintenance script (key rotation, csr signature, CA creation, ...) will now
 <table width=100% style="border:2px dotted dodgerblue;"><td style="padding:0;">
 
 ```report
-All maintenance script have been executed successfully ....... PASS [] / FAIL []
+All maintenance script have been executed successfully ...... PASS [] / FAIL []
 ```
 
 </td></table>
