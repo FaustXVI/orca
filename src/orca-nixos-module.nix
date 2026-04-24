@@ -9,7 +9,7 @@
       sudoer_scripts = builtins.attrValues all_scripts.orca_scripts.sudoer;
 
       run_ceremony = pkgs.writeShellScriptBin "run_ceremony" (import ./run_ceremony.nix (args // { inherit (pkgs) lib; inherit orca_user pkgs all_scripts; }));
-      inherit (config.orca) latest_cvault;
+      latest_cvault = if config.orca.latest_cvault == null then null else pkgs.lib.toLower config.orca.latest_cvault;
       # record everything that happens on the terminal
       record_session = pkgs.writeShellScriptBin "record_session" ''
             mkdir -p ~/.gnupg
@@ -90,7 +90,7 @@
             type = with types; enum [ "dev" "preprod" "prod" ];
           };
           latest_cvault = mkOption {
-            type = with types; nullOr (strMatching "[0-9a-f]{64}");
+            type = with types; nullOr (strMatching "[0-9a-fA-F]{64}");
           };
           actions_in_order = mkOption {
             type = with types; listOf (enum user_scripts_names);
