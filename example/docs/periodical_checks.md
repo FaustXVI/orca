@@ -366,7 +366,7 @@ Take the current date now, it will be called *D<sub>now</sub>*. Add 18 months to
 In order to get the expiry date of the offline CRLs, fetch them from the aia server or the last ceremony's backup.
 The following test should be done for *every* CRL of the aia.
 
-To display a CRL, use the command :
+To display a CRL, use the command:
 ```
 openssl crl -in /path/to/crl -noout -text
 ```
