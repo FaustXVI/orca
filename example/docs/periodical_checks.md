@@ -356,7 +356,7 @@ You have two options there:
 
 ### The offline CRLs are valid for the next 12 months to come
 
-The CRLs are valid for a fix amount of time and can only be renewed during a ceremony.
+The CRLs are valid for a pre-computed amount of time and can only be renewed during a ceremony.
 Thus the CRLs need to be valid until the next recurrent check (plus some margin), that is to say, for the next 18 months.
 
 #### Test
