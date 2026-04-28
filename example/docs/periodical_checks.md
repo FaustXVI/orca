@@ -380,7 +380,7 @@ If not, a new offline CRL should be generated, the fix below should be applied.
 
 #### Fix
 
-During a ceremony, the CRLs are all updated. So running a ceremony, even empty, would give new CRLs that can then be published.
+During a ceremony, CRLs for all offline PKIs are re-generated. A ceremony should thus be run (even if there are no actions). The outcome of the ceremony will be the generation of new CRLs that can then be published.
 
 ### The next periodical check is planned
 
