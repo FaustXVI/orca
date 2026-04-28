@@ -90,9 +90,7 @@ EOF
 
       confirm
   
-      ${pkgs.lib.getExe (with orca_protocol; if expect_initialized then unseal else initialize-vault)} > /tmp/root_token
-      export VAULT_TOKEN=$(cat /tmp/root_token)
-      rm /tmp/root_token
+      export VAULT_TOKEN=$(${pkgs.lib.getExe (with orca_protocol; if expect_initialized then unseal else initialize-vault)})
 
       function revoke() {
         echo "Revoking root token..." >&2

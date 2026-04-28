@@ -25,7 +25,14 @@ let
       { }
       (shell-files dir))
   ];
-  wrapSudoerScript = scripts: builtins.mapAttrs (acc: script: ''sudo ${pkgs.lib.getExe script}'') scripts;
+  wrapSudoerScript = scripts: builtins.mapAttrs (acc: script: ''
+  if [[ $EUID -ne 0 ]]
+  then
+    sudo ${pkgs.lib.getExe script}
+  else
+    ${pkgs.lib.getExe script}
+  fi
+  '') scripts;
 
 in
 {
