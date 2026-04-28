@@ -367,7 +367,7 @@ In order to get the expiry date of the offline CRLs, fetch them from the aia ser
 The following test should be done for *every* CRL of the aia.
 
 To display a CRL, use the command:
-```
+```shell
 openssl crl -in /path/to/crl -noout -text
 ```
 
