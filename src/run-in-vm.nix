@@ -1,7 +1,7 @@
 { nixpkgs, self, system, pkgs, ORCA_DISK_NAME, orca_config, nixpkgsQemu, ... }:
 
 let
-  vm-system = (nixpkgsQemu.lib.nixosSystem
+  vm-system = (nixpkgs.lib.nixosSystem
     {
       inherit system;
       modules = [
@@ -21,7 +21,7 @@ let
             };
             imports = [
               # We need to import that to make it work.
-              "${nixpkgsQemu}/nixos/modules/virtualisation/qemu-vm.nix"
+              "${nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix"
             ];
             config = {
               assertions = [
@@ -50,6 +50,7 @@ let
                 diskImage = null;
                 forwardPorts = [{ host.port = 2222; guest.port = 22; }];
                 qemu = {
+                  package = (import nixpkgsQemu {inherit system;}).qemu;
                   options = [
                     "-bios"
                     "${pkgs.OVMF.fd}/FV/OVMF.fd"
