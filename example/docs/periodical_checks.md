@@ -385,3 +385,7 @@ During a ceremony, CRLs for all offline PKIs are re-generated. A ceremony should
 ### The next periodical check is planned
 
 A new periodical check should be planned within 1 year.
+
+> [!CAUTION]
+> This 1 year periodicity is linked to many requirements above.
+> You can reduce the delay between two periodical checks but you should make sure that every checks validate the state of the PKI for that duration and adapt your PKI accordingly.
