@@ -2,6 +2,9 @@
 
 This repository uses [O.R.CA unstable](https://eove.github.io/orca/unstable) as written in the [flake.nix](./flake.nix) file
 
+> [!Tip]
+> In order to [run in a controlled environment](https://eove.github.io/orca/unstable/story/verifiable-os.html), O.R.C.A extensively uses [Nix and NixOS](https://nixos.org/). Please consult its documentation, install Nix, and make sure the `nix` command is available to you before proceeding.
+
 The documentation is present in the `docs` folder as markdown files.
 
 You can open it locally in a web browser on your machine by running the following command:
