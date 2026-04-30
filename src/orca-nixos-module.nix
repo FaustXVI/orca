@@ -71,7 +71,7 @@
             systemctl stop ${config.systemd.services.vault.name}
             DEVICE=$(df  ${VAULT_STORAGE_PATH} | tail -1 | cut -d " " -f 1 | xargs basename)
             umount ${VAULT_STORAGE_PATH}
-            echo "Switch the stick to read-only to finish the ceremony"
+            echo "Switch the stick to read-only to finish the ceremony (this machine will then shutdown)"
             RO_FILE="/sys/class/block/''${DEVICE}/ro"
             until [ -e $RO_FILE ] && [ $(cat $RO_FILE 2> /dev/null || echo 0) -eq  1 ]
             do
