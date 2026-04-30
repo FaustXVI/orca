@@ -388,4 +388,4 @@ A new periodical check should be planned within 1 year.
 
 > [!CAUTION]
 > This 1 year periodicity is linked to many requirements above.
-> You can reduce the delay between two periodical checks but you should make sure that every checks validate the state of the PKI for that duration and adapt your PKI accordingly.
+> You can change the delay between two periodical checks but you should make sure that every check validates the state of the PKI for that change.
