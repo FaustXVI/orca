@@ -12,7 +12,8 @@ in
     pkill gpg-agent || true
     sleep 1
   done
-  ID=$(gpg --card-status --keyid-format 0xlong | grep "cv25519/" | sed -E -e 's|.*cv25519/0x([^ ]+).*|\1|')
+  CARD_STATUS="$(gpg --card-status --keyid-format 0xlong 2> /dev/null)"
+  ID=$(echo "$CARD_STATUS" | grep "cv25519/" | sed -E -e 's|.*cv25519/0x([^ ]+).*|\1|')
 
   if [ -n "$ID" ]
   then
@@ -25,8 +26,8 @@ in
 
         if [ "$?" -eq 0 ] 
         then
-            echo "Found a share unlocked by the hardware token of :" >&2
-            gpg-card list | grep -i "user id" | sort | uniq >&2
+            echo "$CARD_STATUS" >&2
+            echo "Found a share unlocked by the above hardware token" >&2
             echo "$SHARE"
             exit 0
         fi
