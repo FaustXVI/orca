@@ -393,7 +393,7 @@ the first partition is the only one marked as bootable ...... PASS [] / FAIL []
 the checksum *Ciso* is correct .............................. PASS [] / FAIL []
 
 The observer's computer is successfully booted on the stick . PASS [] / FAIL []
-The USB stick stayed in read-only mode the boot succeed ..... PASS [] / FAIL []
+The USB stick remained read-only until the boot succeed ..... PASS [] / FAIL []
 ```
 
 </td></table>
