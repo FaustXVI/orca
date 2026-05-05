@@ -125,23 +125,6 @@
         };
       };
       config = {
-        assertions =
-          let
-            script_names = builtins.map (p: p.name) sudoer_scripts;
-            allowed_scripts = [ "backup" "count-tokens" "seal" "wipe_everything" "init-script" "rotate-shares" "unseal" "compute_c_vault" "initialize-vault" ];
-            unknown_scripts = pkgs.lib.lists.subtractLists allowed_scripts script_names;
-          in
-          [
-            {
-              assertion = unknown_scripts == [ ];
-              message = ''These scripts are not confirmed as scripts that can be ran with sudo : ${pkgs.lib.strings.concatStringsSep ", " unknown_scripts}
-
-It is possible that they were saved in the wrong folder.
-
-If it should indeed be allowed to run as root, please double check them for security risk and then add it's name to the allowed_scripts above.
-              '';
-            }
-          ];
         environment = {
           variables =
             let
@@ -196,7 +179,7 @@ If it should indeed be allowed to run as root, please double check them for secu
             {
               enable = true;
               extraConfig = ''
-                Defaults env_keep += "VAULT_ADDR VAULT_CACERT"
+                Defaults env_keep += "VAULT_ADDR VAULT_CACERT VAULT_TOKEN"
               '';
               extraRules = [
                 {

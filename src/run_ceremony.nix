@@ -7,7 +7,6 @@ let
   inherit (config.environment.variables) OUTPUT_FOLDER;
   inherit (config.orca) latest_cvault rotate_keys;
   expect_initialized = latest_cvault != null;
-  has_actions = (builtins.length scripts_to_run_in_order) > 0;
   ceremony_actions = pkgs.lib.strings.concatStringsSep "\n" (builtins.map
     (script: ''
       set -e
@@ -25,7 +24,8 @@ let
     (script: ''- Run ${script.name} '')
     scripts_to_run_in_order)
   ++ [
-    (if has_actions then ''- Revoke the root token'' else "")
+    "- Export all CRLs"
+    "- Revoke the root token"
     "- Seal the vault"
     "- Validate that no root token is left"
     "- Backup everything"
@@ -109,6 +109,8 @@ EOF
             ${pkgs.lib.getExe orca_protocol.rotate-shares}
             confirm
           '' else ""}
+
+      ${pkgs.lib.getExe orca_protocol.export_crls}
 
       revoke
       trap - INT QUIT TERM EXIT ABRT

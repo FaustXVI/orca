@@ -354,6 +354,38 @@ You have two options there:
 > - after 30 years, it would be good to get new people to own the whole system, including setup from scratch
 > - you have 6 months...
 
+### The offline CRLs are valid for the next 12 months to come
+
+The CRLs are valid for a pre-computed amount of time and can only be renewed during a ceremony.
+Thus the CRLs need to be valid until the next recurrent check (plus some margin), that is to say, for the next 18 months.
+
+#### Test
+
+Take the current date now, it will be called *D<sub>now</sub>*. Add 18 months to *D<sub>now</sub>*. The result is a date *D<sub>min</sub>*.
+
+In order to get the expiry date of the offline CRLs, fetch them from the aia server or the last ceremony's backup.
+The following test should be done for *every* CRL of the aia.
+
+To display a CRL, use the command:
+```shell
+openssl crl -in /path/to/crl -noout -text
+```
+
+The expiry date will be called *D<sub>expiry</sub>*, it can be found in the `Next Update` attribute displayed by the command above.
+
+The following statement should be true:
+*D<sub>expiry</sub>*>*D<sub>min</sub>*.
+If this is the case, this test is a PASS.  
+If not, a new offline CRL should be generated, the fix below should be applied.
+
+#### Fix
+
+During a ceremony, CRLs for all offline PKIs are re-generated. A ceremony should thus be run (even if there are no actions). The outcome of the ceremony will be the generation of new CRLs that can then be published.
+
 ### The next periodical check is planned
 
 A new periodical check should be planned within 1 year.
+
+> [!CAUTION]
+> This 1 year periodicity is linked to many requirements above.
+> You can change the delay between two periodical checks but you should make sure that every check validates the state of the PKI for that change.
