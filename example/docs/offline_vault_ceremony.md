@@ -189,8 +189,14 @@ In order to create this bootable live media, that we will refer to as *ephemeral
 > [!Warning]  
 > Make sure you are doing this on the ✅`trusted commit`
 
+When initializing the vault :
 ```bash
 nix run . /dev/sda
+```
+
+Otherwise, fetch the offline CA private data backup for the corresponding environment (eg: prod, preprod etc.) and run :
+```bash
+nix run . /dev/sda /path/to/ORCA_backup.tar
 ```
 
 > [!Warning]  
@@ -202,33 +208,8 @@ By default, this script will create 3 partitions on the *ephemeral vault* media,
 
 You can check that with :
 ```bash
-lsblk -o name,label
+lsblk -o name,label /dev/sda
 ```
-
-> [!Warning]  
-> The rest of this section should not be executed at the first initialisation of the vault because we have no previous backup. In that case, please skip to the next section.
-
-Fetch offline CA private data backup for the corresponding environment (eg: prod, preprod etc.).
-
-The content of the previous offline vault private data should be extracted and put into the `VAULT_WRITABLE` partition.
-
-If the USB stick's partitions have been mounted automatically by your distro, the following will help in finding out the mount point for the `VAULT_WRITABLE` content:
-```bash
-lsblk -o name,mountpoint,label,size | grep VAULT_WRITABLE
-```
-
-If the above fails, then you will have to mount the `VAULT_WRITABLE` partition (manually on the CLI or by opening the volume in your file manager).  
-In the examples below, we use `/VAULT_WRITABLE/mount/point` as the mount point.
-
-You can extract the tar archive of the vault private data with:
-```bash
-sudo tar --same-owner -xvf ORCA_backup.tar -C /VAULT_WRITABLE/mount/point
-```
-
-> [!Tip]  
-> You can double-check that the data is correct with:  
-> `cd /VAULT_WRITABLE/mount/point && sudo find . -type f -exec sha256sum -b {} \; | sort -k2 | sha256sum -`  
-> You should get the same checksum as the value *C<sub>vault</sub>* indicated in the `previous report`.
 
 ## Executing the ceremony
 
