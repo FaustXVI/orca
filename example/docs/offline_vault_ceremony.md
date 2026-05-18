@@ -474,7 +474,7 @@ One of the 👥`team members` inserts the USB stick on their own computer.
 The 👥`team member` that inserted the USB stick, immediately:
 1. copies the tar archive from the `VAULT_WRITABLE` partition to the backup destination corresponding to the environment.
 2. sends the tar archive from the `VAULT_WRITABLE` partition to all the participants as an attached file via e-mail
-3. gets the AIA data in folder `orca/aia/` of the current environment (prod/preprod) from `VAULT_WRITABLE` partition data and makes it available online.
+3. gets the AIA data in folder `orca/output/aia/` of the current environment (prod/preprod) from `VAULT_WRITABLE` partition data and makes it available online.
 
 All 👥`team members` should now:
 1. download the attached private data archive from the e-mail they have received
