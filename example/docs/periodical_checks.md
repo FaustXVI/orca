@@ -225,7 +225,8 @@ This PKID value should be identical between:
 
 You can copy the following lines in a file and run the script to automatically do that check.
 ```bash
-#!/usr/bin/env bash
+#!/usr/bin/env nix
+#! nix shell -s NIXPKGS_ALLOW_UNFREE 1 nixpkgs#empty --command nix shell --impure nixpkgs#openssl nixpkgs#vault-bin nixpkgs#jq --command bash
 
 set -e
 
