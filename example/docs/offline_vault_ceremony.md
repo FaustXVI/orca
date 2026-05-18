@@ -349,7 +349,7 @@ To check the key:
 - The following steps must be performed without booting on the USB stick, with the USB stick still in *read-only* mode, and directly on the installed Linux OS of the 👀`observer`'s computer.
 - An environment variable `Niso` should be set with the correct value, then the key is verified by the 💻`operator` (number of partitions, *N<sub>iso</sub>* checksum):
 ```bash
-sudo fdisk -l /dev/sda &&\
+ sudo fdisk -l /dev/sda &&\
  sudo dd if=/dev/sda bs=512 skip=1 count=$(expr $Niso / 512) |\
  sha256sum -b
 ```
@@ -485,8 +485,8 @@ On both these archives, they should perform a checksum of this data with the fol
 export VAULT_BACKUP=/path/to/ORCA_backup.tar
 (export TMP_DIR="$(mktemp -d)" &&\
  cd "$TMP_DIR" &&\
- sudo tar --same-owner -xf "$VAULT_BACKUP" -C . &&\
- sudo find . -type f -exec sha256sum -b {} \; | sort -k2 | sha256sum -)
+ tar -xf "$VAULT_BACKUP" -C . &&\
+ find . -type f -exec sha256sum -b {} \; | sort -k2 | sha256sum -)
 ```
 
 The value displayed should match *C<sub>vault</sub>* grabbed from the QR code above.
