@@ -521,3 +521,10 @@ The 📝`reporter`, 💻`operator`, and 👀`observer` will all sign the report 
 A gpg-based one can be found in [the O.R.CA documentation](https://eove.github.io/orca/unstable/signing_and_verifying.html)
 
 All 👥`team members` should now get a copy of the signed report and perform a check of all signatures using [the same process as when checking the last ceremony's report](#verification-of-the-last-ceremonys-report).
+
+The signed report should also be saved to the backup destination corresponding to the environment.
+
+### Using the output of the ceremony 
+
+The ceremony produced outputs that can be found in `orca/output`. This contains at least the last version of the `AIA` that should be exposed online. It may also contain signed CSR that should be imported to the corresponding CA. This actions doesn't need to be done during the ceremony but should be planned to be done quickly after.
+
