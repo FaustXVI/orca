@@ -349,7 +349,7 @@ To check the key:
 - The following steps must be performed without booting on the USB stick, with the USB stick still in *read-only* mode, and directly on the installed Linux OS of the 👀`observer`'s computer.
 - An environment variable `Niso` should be set with the correct value, then the key is verified by the 💻`operator` (number of partitions, *N<sub>iso</sub>* checksum):
 ```bash
- sudo fdisk -l /dev/sda &&\
+sudo fdisk -l /dev/sda &&\
  sudo dd if=/dev/sda bs=512 skip=1 count=$(expr $Niso / 512) |\
  sha256sum -b
 ```
@@ -374,7 +374,7 @@ the first partition is the only one marked as bootable ...... PASS [] / FAIL []
 the checksum *Ciso* is correct .............................. PASS [] / FAIL []
 
 The observer's computer is successfully booted on the stick . PASS [] / FAIL []
-The USB stick remained read-only until the boot succeed ..... PASS [] / FAIL []
+The USB stick remained read-only until the boot succeeds .... PASS [] / FAIL []
 ```
 
 </td></table>
@@ -524,7 +524,7 @@ All 👥`team members` should now get a copy of the signed report and perform a 
 
 The signed report should also be saved to the backup destination corresponding to the environment.
 
-### Using the output of the ceremony 
+### Using the output of the ceremony
 
-The ceremony produced outputs that can be found in `orca/output`. This contains at least the last version of the `AIA` that should be exposed online. It may also contain signed CSR that should be imported to the corresponding CA. This actions doesn't need to be done during the ceremony but should be planned to be done quickly after.
+The output produced during the ceremony can be found in `orca/output`. It contains the latest version of the `AIA` that should be exposed online. It may also contain signed CSR that should be imported to the corresponding CA. Applying this output files doesn't need to be done during the ceremony but should be planned quickly after.
 
