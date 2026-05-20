@@ -58,6 +58,9 @@ gpg --card-status
 gpg --card-edit
 ```
 
+> [Note!]  
+> Each time you will see a `gpg/card` prompt in the instructions below, you will have to run again `gpg --card-edit` if you are not already in the card edit mode.
+
 Reset the hardware token (see [below](#handling-pin-locks)) if necessary.
 
 Then change the user PIN:
@@ -86,14 +89,9 @@ And set a new admin PIN with option 3.
 > - gnupg
 > - hashicorp vault's share encryption (https://developer.hashicorp.com/vault/docs/concepts/pgp-gpg-keybase#initializing-with-gnupg)
 
-Generate a new Ed25519/Cv25519 keyset:
+You now have to generate a new Ed25519/Cv25519 keyset from the card edit prompt.
 
-Enter the "card edit" command line tool if not already in the edit card tool:
-```bash
-gpg --card-edit
-```
-
-From the card edit prompt, here is a trace of commands & answers needed in order to select the correct crypto algorithms:
+Here is a trace of commands & answers needed in order to select the correct crypto algorithms (your mileage may vary depending on the version on gpg):
 ```
 gpg/card> admin
 Admin commands are allowed
@@ -140,12 +138,9 @@ Your selection? 1
 The card will now be re-configured to generate a key of type: ed25519
 ```
 
-We can now generate the new keys:
-```bash
-gpg --card-edit
-```
+We can now generate the new keys.
 
-In the output of the aboev command, you will notice that the key attributes are now listed as `ed25519 cv25519 ed25519`.
+In the output of the above command, you will notice that the key attributes are now listed as `ed25519 cv25519 ed25519`.
 
 ```
 gpg/card> admin
@@ -220,8 +215,6 @@ PIN retry counter : 3 0 3
 
 To force a factory-reset (if you locked the admin PIN):
 ```
-$ gpg --card-edit
-
 gpg/card> admin
 gpg/card> factory-reset
 ```
@@ -229,8 +222,6 @@ gpg/card> factory-reset
 
 To reset the PIN (if you locked the user PIN), this will require to know the admin PIN:
 ```
-$ gpg --card-edit
-
 gpg/card> passwd
 gpg: OpenPGP card no. XXXXXXXXXXXXXXXXXX detected
 

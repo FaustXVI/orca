@@ -374,7 +374,7 @@ the first partition is the only one marked as bootable ...... PASS [] / FAIL []
 the checksum *Ciso* is correct .............................. PASS [] / FAIL []
 
 The observer's computer is successfully booted on the stick . PASS [] / FAIL []
-The USB stick remained read-only until the boot succeed ..... PASS [] / FAIL []
+The USB stick remained read-only until the boot succeeds .... PASS [] / FAIL []
 ```
 
 </td></table>
@@ -474,7 +474,7 @@ One of the 👥`team members` inserts the USB stick on their own computer.
 The 👥`team member` that inserted the USB stick, immediately:
 1. copies the tar archive from the `VAULT_WRITABLE` partition to the backup destination corresponding to the environment.
 2. sends the tar archive from the `VAULT_WRITABLE` partition to all the participants as an attached file via e-mail
-3. gets the AIA data in folder `orca/aia/` of the current environment (prod/preprod) from `VAULT_WRITABLE` partition data and makes it available online.
+3. gets the AIA data in folder `orca/output/aia/` of the current environment (prod/preprod) from `VAULT_WRITABLE` partition data and makes it available online.
 
 All 👥`team members` should now:
 1. download the attached private data archive from the e-mail they have received
@@ -485,8 +485,8 @@ On both these archives, they should perform a checksum of this data with the fol
 export VAULT_BACKUP=/path/to/ORCA_backup.tar
 (export TMP_DIR="$(mktemp -d)" &&\
  cd "$TMP_DIR" &&\
- sudo tar --same-owner -xf "$VAULT_BACKUP" -C . &&\
- sudo find . -type f -exec sha256sum -b {} \; | sort -k2 | sha256sum -)
+ tar -xf "$VAULT_BACKUP" -C . &&\
+ find . -type f -exec sha256sum -b {} \; | sort -k2 | sha256sum -)
 ```
 
 The value displayed should match *C<sub>vault</sub>* grabbed from the QR code above.
@@ -521,3 +521,10 @@ The 📝`reporter`, 💻`operator`, and 👀`observer` will all sign the report 
 A gpg-based one can be found in [the O.R.CA documentation](https://eove.github.io/orca/unstable/signing_and_verifying.html)
 
 All 👥`team members` should now get a copy of the signed report and perform a check of all signatures using [the same process as when checking the last ceremony's report](#verification-of-the-last-ceremonys-report).
+
+The signed report should also be saved to the backup destination corresponding to the environment.
+
+### Using the output of the ceremony
+
+The output produced during the ceremony can be found in `orca/output`. It contains the latest version of the `AIA` that should be exposed online. It may also contain signed CSR that should be imported to the corresponding CA. Applying this output files doesn't need to be done during the ceremony but should be planned quickly after.
+
